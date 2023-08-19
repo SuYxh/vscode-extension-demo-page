@@ -4,10 +4,7 @@ export default { name: 'App' }
 
 <script setup lang="ts">
 import HelloWorld from './components/HelloWorld.vue'
-import Text from './components/Text.vue'
-
 import { onMounted } from 'vue'
-
 
 onMounted(() => {
   const body = document.body;
@@ -26,8 +23,6 @@ onMounted(() => {
     </a>
   </div>
   <HelloWorld msg="Vite + Vue" />
-
-  <Text></Text>
 </template>
 
 <style scoped>

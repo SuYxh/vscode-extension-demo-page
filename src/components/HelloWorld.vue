@@ -1,13 +1,9 @@
 <script setup lang="ts">
-import { ref, inject, getCurrentInstance } from 'vue'
-// import { callVscode } from '../plugins/vscode';
+import { ref, inject } from 'vue'
 
 defineProps<{ msg: string }>()
 
-const instance = getCurrentInstance() as any
-
-const count = ref(0)
-const projectName = ref('hello')
+const projectName = ref('getProjectName')
 const text = ref('')
 
 const $callVscode = inject('$callVscode') as Function
@@ -26,11 +22,6 @@ const showVscodeInfo = () => {
   $callVscode('showInfo', 'hello from webview')
 }
 
-const xiezai = () => {
-  // 手动卸载 Vue 应用
-  instance.appContext.app.unmount();
-}
-
 const handleVscodeTest = (res: any) => {
   console.log('处理来自 vscode 的 test 事件', res);
   text.value = res
@@ -42,20 +33,22 @@ $addVscodeCb('test', handleVscodeTest)
 
 <template>
   <h1>{{ msg }}</h1>
-  <h1>{{ projectName }}</h1>
 
   <div class="card">
-    <button type="button" @click="count++">count is {{ count }}</button>
-    <br>
-    <br>
-    <button type="button" @click="sendMsgToVscode">getProjectName</button>
+    <button type="button" @click="sendMsgToVscode">{{ projectName || '获取失败' }}</button>
     <br>
     <br>
     <button type="button" @click="showVscodeInfo">showVscodeInfo</button>
-    <button type="button" @click="xiezai">xiezai</button>
-
+    <br>
     <div v-if="text">
-      当前选中的代码是：{{ text }}
+      <div>
+        当前选中的代码是：
+      </div>
+      <div>
+        <pre>
+          {{ text }}
+        </pre>
+      </div>
     </div>
   </div>
 </template>
